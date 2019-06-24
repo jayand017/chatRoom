@@ -1,0 +1,8 @@
+input[type='text'] {
+    text-align: center;
+    vertical-align: middle;
+    padding: 1.25rem 2.5rem;
+    color: #585858;
+    border-radius: 5px;
+    border: none;
+}
