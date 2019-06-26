@@ -2,15 +2,18 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
+      body { font-family: 'Open Sans', sans-serif; }
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
+      form button { font-family: 'Open Sans', sans-serif; width: 9%; background-color: #03DAC6; border: none; padding: 10px; }
+
+      #messages { list-style-type: none; margin: 0; padding: 20px; }
+      #messages li.incoming { padding: 5px 10px;  margin: 5px 0; background-color:grey; color: #fff; display: table;  border-radius: 8px; border-bottom-left-radius: 0; }
+      #messages li.outgoing { padding: 5px 10px; margin: 5px 0; background-color: #03DAC6; color: #fff; display: table; margin-left: auto; right: 0;  border-radius: 8px; border-bottom-right-radius: 0; }
     </style>
     <script>
       var nick;
@@ -21,8 +24,7 @@
     </script>
   </head>
   <body onload="getNick();">
-    <h2>Welcome, <span id="nick">Nick</span></h2>
-    <ul id="me"></ul>
+    <h2 style="padding: 10px; text-align: center;">Welcome, <span id="nick">Nick</span></h2>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -35,12 +37,12 @@
         $('form').submit(function(e) {
             e.preventDefault();
             socket.emit('chat message', nick + ': ' + $('#m').val());
-            $('#me').append($('<li>').text($('#m').val()));
+            $('#messages').append($('<li>').addClass('outgoing').text($('#m').val()));
             $('#m').val('');
             return false;
         });
         socket.on('chat message', function(msg) {
-            $('#messages').append($('<li>').text(msg));
+            $('#messages').append($('<li>').addClass('incoming').text(msg));
         });
       });
     </script>
